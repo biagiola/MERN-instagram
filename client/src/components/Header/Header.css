@@ -1,0 +1,48 @@
+.app__login {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  justify-content: center;
+  padding: 520px;
+  background-color: white;
+  border: 1px solid lightgray;
+}
+
+.app__loginHome {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid lightgray;
+}
+
+.app__headerImage {
+  object-fit: contain;
+}
+
+.app__headerRight {
+  display: flex;
+  align-items: center;
+}
+
+.app__headerRight > p {
+  margin-right: 5px;
+}
+
+.app__headerAvatar {
+  height: 30px !important;
+  width: 30px !important;
+}
+
+.app__header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-around;
+  z-index: 1;
+  padding: 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 10px;
+}

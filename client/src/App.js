@@ -1,34 +1,28 @@
-import React from 'react';
-import './App.css';
-import Feed from './Components/Feed/Feed';
-import Header from './Components/Header/Header';
-import Login from './Components/Login/Login';
-import Sidebar from './Components/Sidebar/Sidebar';
-import Widgets from './Components/Widgets/Widgets';
-import { useStateValue } from './StateProvider';
+import React from 'react'
+import './App.css'
+import Header from './components/Header/Header'
+import Footer from './components/Footer/Footer'
+import Posts from './components/Posts/Posts'
+import EmbedInstagram from './components/EmbedInstagram/EmbedInstagram'
+
+import { db, auth } from './firebase'
+import { Button, Avatar, makeStyles, Modal, Input } from '@material-ui/core'
 
 function App() {
-  const [{ user }, dispatch] = useStateValue()
-
   return (
-    <div className="App">
-      {
-        user ? ( 
-          <>
-            <Header />
+    <div className="app">
 
-            <div className="app__body">
-              <Sidebar />
-              <Feed />
-              <Widgets />
-            </div>
-          </>
-        ) : (
-          <Login />
-        ) 
-      }
+      <Header />
+
+      <Posts />
+
+      <EmbedInstagram />
+
+      <Footer />
     </div>
   );
 }
 
-export default App;
+export default App
+
+

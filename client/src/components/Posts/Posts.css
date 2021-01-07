@@ -1,0 +1,6 @@
+.app__posts {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 10px 30px;
+}
