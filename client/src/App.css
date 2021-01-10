@@ -1,8 +1,11 @@
-.app {
-    background-color: #f1f2f5;
+* {
+  margin: 0;
 }
 
-.app__body {
-    display: flex;
+.app {
+  background-color: #fafafa;
+  padding-bottom: 100px;
 }
+
+
 
