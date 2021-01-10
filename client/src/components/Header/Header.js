@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import './Header.css'
 import 'semantic-ui-css/semantic.min.css'
-import { db, auth } from '../../firebase'
+import { auth } from '../../firebase'
 import { useStateValue } from '../../StateProvider'
 import { actionTypes } from '../../Reducer'
 import { Button, Avatar, makeStyles, Modal, Input, IconButton } from "@material-ui/core"
@@ -46,6 +46,7 @@ const Header = () => {
   const [user, setUser] = useState(null)
   const [{ userName }, dispatch] = useStateValue()
 
+  // listening for auth changes
   useEffect(() => {
     console.log('authState changed hola')
 
@@ -54,7 +55,7 @@ const Header = () => {
         // user is logged in...
         console.log('authUser.displayName' ,authUser.displayName)
         setUser(authUser)
-
+        
         dispatch({
           type: actionTypes.SET_USER,
           user: authUser.displayName
@@ -76,12 +77,13 @@ const Header = () => {
           user: null
         })
       }
+
     })
 
     return () => {
-      unsubscribe()
-    }
-  }, [user, username])
+      unsubscribe();
+    };
+  }, [user])
 
 
   const handleLogin = (e) => {
@@ -186,7 +188,7 @@ const Header = () => {
       <img
         className="app__headerImage"
         src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-        alt=""
+        alt="logo"
       />
       {userName ? (
         <div className="app__headerRight">
