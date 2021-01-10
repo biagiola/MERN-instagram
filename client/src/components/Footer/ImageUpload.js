@@ -41,20 +41,21 @@ const ImageUpload = ({ username }) => {
           .then((url) => {
             setUrl(url);
             
-            axios.post('/upload', {
+            axios.post('http://localhost:8080/posts/upload/post', {
               image: url,
               caption: caption,
               user: username,
-              timestamp: Date.now(  )
+              comments: [],
+              timestamp: Date.now()
             })
 
             // post image inside firebase store
-            db.collection("posts").add({
+            /* db.collection("posts").add({
               imageUrl: url,
               caption: caption,
               username: username,
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            });
+            }); */
 
             setProgress(0);
             setCaption("");

@@ -1,16 +1,16 @@
 import React from 'react'
 import ImageUpload from './ImageUpload'
 import { useStateValue } from '../../StateProvider'
-import { actionTypes } from '../../Reducer'
+import './Footer.css'
 
 const Footer = () => {
-  const [{ userName }, dispatch] = useStateValue()
+  const [{ userName }] = useStateValue()
 
   return (
     <div>
       {/* Upload footer */}
       {userName  ? (
-        <div className="app__upload">
+        <div className="footer">
           <ImageUpload username={userName} />
         </div>
       ) : (
