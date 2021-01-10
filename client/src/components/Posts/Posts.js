@@ -3,6 +3,7 @@ import axios from '../../axios'
 import { useStateValue } from '../../StateProvider'
 import FlipMove from 'react-flip-move'
 import Post from './Post'
+import './Posts.css'
 
 const Posts = () => {
   const [posts, setPosts] = useState([]) // posts comming from db
@@ -33,7 +34,7 @@ const Posts = () => {
 
   return (
     <div>
-      <div className="app__posts">
+      <div className="posts">
         
           {userName ? posts.map(post => (
             <Post
