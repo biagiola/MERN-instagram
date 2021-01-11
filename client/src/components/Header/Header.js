@@ -26,10 +26,21 @@ const useStyles = makeStyles((theme) => ({
     width: 400,
     height: 200,
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
+    border: "0",
+    borderRadius: "15px",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(2, 0, 3), // button, sides, and top
   },
+  buttons: {
+    display: "flex",
+    flexDirection: "column",
+    alignContent: "center"
+  },
+  button: {
+    padding: theme.spacing(2, 2, 2),
+    color: "#e15d61",
+    fontWeight: bold
+  }
 }))
 
 const Header = () => {
@@ -38,6 +49,7 @@ const Header = () => {
   
   const [open, setOpen] = useState(false)
   const [registerOpen, setRegisterOpen] = useState(false)
+  const [openProfileInfo, setOpenProfileInfo] = useState(false)
 
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState("")
@@ -116,6 +128,8 @@ const Header = () => {
       user: null
     })
 
+    // close the modal
+    setOpenProfileInfo(false)
   }
 
   return (
@@ -192,33 +206,43 @@ const Header = () => {
       />
       {userName ? (
         <div className="app__headerRight">
-          <Button onClick={handleLogout}>Logout</Button>
+          
           
           <IconButton>
-            <Home />
+            <Home style={{ color: "#212112" }} />
           </IconButton>
           <IconButton>
-            <FavoriteBorder /> 
-          </IconButton>
-          
-          <IconButton>
-            <Icon name='facebook messenger' width="32px" height="32px" />
+            <FavoriteBorder style={{ color: "#212112" }}/> 
           </IconButton>
           
           <IconButton>
-            <Explore />
+            <Icon name='facebook messenger' width="32px" height="32px" style={{ color: "#212112" }}/>
+          </IconButton>
+          
+          <IconButton>
+            <Explore style={{ color: "#212112" }}/>
           </IconButton>
           
           <div>{userName}</div>
-          <Avatar
-            className="app__headerAvatar"
-            alt={userName}
-            src="/static/images/avatar/1.jpg"
-          />
+          <IconButton>
+            <Modal open={openProfileInfo} onClose={() => setOpenProfileInfo(false)}>
+              <div style={modalStyle} className={classes.paper}>
+                <div className={classes.buttons}>
+                  <Button onClick={handleLogout} className={classes.button}>Logout</Button>
+                  <Button onClick={() => setOpenProfileInfo(false)} className={classes.button}>Cancel</Button>
+                </div>
+              </div>
+            </Modal>
+            <Avatar
+              onClick={() => setOpenProfileInfo(true)}
+              className="app__headerAvatar"
+              alt={userName}
+              src="/static/images/avatar/1.jpg"
+            />
+          </IconButton>
         </div>
       ) : (
         <form className="app__loginHome">
-          
           <Button onClick={() => setOpen(true)}>Login</Button>
           <Button onClick={() => setRegisterOpen(true)}>Sign Up</Button>
         </form>
