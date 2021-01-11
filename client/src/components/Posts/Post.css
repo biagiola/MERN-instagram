@@ -62,12 +62,6 @@
 }
 
 .post__icon__liked { 
-  /* animation-name: ZoomInOut;
-  animation-duration: 0.4s;
-  animation-direction: alternate; 
-  animation-timing-function: ease-out; */
-  color: #262626 !important;  
-  --darkreader-inline-fill: #262626 !important;
 }
 
 .animated {
@@ -76,6 +70,7 @@
   animation-direction: alternate; 
   animation-timing-function: ease-out;
 }
+
 @keyframes ZoomInOut {
   0% {
       transform: scale(1.0);
