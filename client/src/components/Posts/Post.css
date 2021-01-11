@@ -57,7 +57,34 @@
 }
 
 .post__icon {
+  cursor: pointer;
   padding: 5px;
+}
+
+.post__icon__liked { 
+  /* animation-name: ZoomInOut;
+  animation-duration: 0.4s;
+  animation-direction: alternate; 
+  animation-timing-function: ease-out; */
+  color: #262626 !important;  
+  --darkreader-inline-fill: #262626 !important;
+}
+
+.animated {
+  animation-name: ZoomInOut;
+  animation-duration: 0.4s;
+  animation-direction: alternate; 
+  animation-timing-function: ease-out;
+}
+@keyframes ZoomInOut {
+  0% {
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
+  }
+  50% {
+    transform: scale(1.3);
+      -webkit-transform: scale(1.3);
+  }
 }
 
 .post__comments {
