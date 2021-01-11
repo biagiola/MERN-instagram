@@ -13,14 +13,14 @@ function getModalStyle() {
   const left = 50;
 
   return {
-    height: "300px",
+    height: "380px",
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
   };
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     position: "absolute",
     width: 400,
@@ -29,18 +29,27 @@ const useStyles = makeStyles((theme) => ({
     border: "0",
     borderRadius: "15px",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 0, 3), // button, sides, and top
+    padding: theme.spacing(0, 0, 0), // button, sides, and top
   },
   buttons: {
     display: "flex",
     flexDirection: "column",
-    alignContent: "center"
+    alignContent: "center",
+    
   },
   button: {
     padding: theme.spacing(2, 2, 2),
+    color: "#262626",
+    fontWeight: 500,
+    borderBottom: "1px solid lightgray"
+  },
+  redButton: {
+    padding: theme.spacing(2, 2, 2),
     color: "#e15d61",
-    fontWeight: bold
+    fontWeight: 900,
+    borderBottom: "1px solid lightgray"
   }
+  
 }))
 
 const Header = () => {
@@ -228,7 +237,12 @@ const Header = () => {
             <Modal open={openProfileInfo} onClose={() => setOpenProfileInfo(false)}>
               <div style={modalStyle} className={classes.paper}>
                 <div className={classes.buttons}>
-                  <Button onClick={handleLogout} className={classes.button}>Logout</Button>
+                  <Button onClick={handleLogout} className={classes.redButton }>Logout</Button>
+                  <Button className={classes.redButton }>Report</Button>
+                  <Button className={classes.button }>Go to post</Button>
+                  <Button className={classes.button }>Share to...</Button>
+                  <Button className={classes.button }>Copy Link</Button>
+                  <Button className={classes.button }>Embed</Button>
                   <Button onClick={() => setOpenProfileInfo(false)} className={classes.button}>Cancel</Button>
                 </div>
               </div>
