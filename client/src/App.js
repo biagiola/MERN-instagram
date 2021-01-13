@@ -4,21 +4,28 @@ import Header from './components/Header/Header'
 import Footer from './components/Footer/Footer'
 import Posts from './components/Posts/Posts'
 import EmbedInstagram from './components/EmbedInstagram/EmbedInstagram'
-
-import { db, auth } from './firebase'
-import { Button, Avatar, makeStyles, Modal, Input } from '@material-ui/core'
+import { useStateValue } from './StateProvider'
 
 function App() {
+
+  const [{user}] = useStateValue()
+
   return (
     <div className="app">
+      {
+        user  ? 
+          <div>
+            <Header />
+            
+            <Posts />
+            
+            <EmbedInstagram />
 
-      <Header />
-
-      <Posts />
-
-      <EmbedInstagram />
-
-      <Footer />
+            <Footer />
+          </div>
+        :
+          <div>Welcome to Instagram</div>
+      }
     </div>
   );
 }
