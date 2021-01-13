@@ -3,13 +3,13 @@ import './Post.css'
 import axios from '../../axios'
 import { Avatar } from '@material-ui/core'
 import { MoreHoriz, Edit, DeleteOutline } from '@material-ui/icons'
-import { Button, Menu, MenuItem } from '@material-ui/core'
+import { Button, IconButton, Menu, MenuItem } from '@material-ui/core'
 import { db } from '../../firebase'
 import { useStateValue } from '../../StateProvider'
 
 /* 
   functional components that are styled still be class base component
-  and FlipMove component needs to work only with funcitonal components
+  and FlipMove component needs to work only with functional components
   in order that, we use forwardRef
 */
 
@@ -106,9 +106,9 @@ const Post = forwardRef(
           <h3 className="post__header__name">{username}</h3>
         </div>
         <div className="post__header__title__right">
-          {/* <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+          <IconButton className="post__options" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
             <MoreHoriz />
-          </Button>
+          </IconButton>
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
@@ -122,7 +122,7 @@ const Post = forwardRef(
                 <div className='post__Menu__options'>Delete</div>
               </MenuItem>
             </div>
-          </Menu> */}
+          </Menu>
         </div>
       </div>
 
