@@ -4,9 +4,10 @@ import 'semantic-ui-css/semantic.min.css'
 import { auth } from '../../firebase'
 import { useStateValue } from '../../StateProvider'
 import { actionTypes } from '../../Reducer'
-import { Button, Avatar, makeStyles, Modal, Input, IconButton } from "@material-ui/core"
+import { Button, Avatar, makeStyles, Modal, Input, IconButton, Backdrop, Fade } from "@material-ui/core"
 import { FavoriteBorder, Explore, Home } from '@material-ui/icons'
 import { Icon } from 'semantic-ui-react'
+import FlipMove from 'react-flip-move'
 
 function getModalStyle() {
   const top = 50;
@@ -21,6 +22,11 @@ function getModalStyle() {
 }
 
 const useStyles = makeStyles(theme => ({
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   paper: {
     position: "absolute",
     width: 400,
@@ -216,37 +222,52 @@ const Header = () => {
       {userName ? (
         <div className="app__headerRight">
           
-          
-          <IconButton>
-            <Home style={{ color: "#212112" }} />
-          </IconButton>
-          <IconButton>
-            <FavoriteBorder style={{ color: "#212112" }}/> 
-          </IconButton>
-          
-          <IconButton>
-            <Icon name='facebook messenger' width="32px" height="32px" style={{ color: "#212112" }}/>
-          </IconButton>
-          
-          <IconButton>
-            <Explore style={{ color: "#212112" }}/>
-          </IconButton>
-          
+          <div className="header__icons">
+            <IconButton>
+              <Home style={{ color: "#212112" }} />
+            </IconButton>
+            <IconButton>
+              <FavoriteBorder style={{ color: "#212112" }}/> 
+            </IconButton>
+            
+            <IconButton>
+              <Icon name='facebook messenger' width="32px" height="32px" style={{ color: "#212112" }}/>
+            </IconButton>
+            
+            <IconButton>
+              <Explore style={{ color: "#212112" }}/>
+            </IconButton>
+          </div>  
+
           <div>{userName}</div>
+          {/* Logout modal */}
           <IconButton>
-            <Modal open={openProfileInfo} onClose={() => setOpenProfileInfo(false)}>
-              <div style={modalStyle} className={classes.paper}>
-                <div className={classes.buttons}>
-                  <Button onClick={handleLogout} className={classes.redButton }>Logout</Button>
-                  <Button className={classes.redButton }>Report</Button>
-                  <Button className={classes.button }>Go to post</Button>
-                  <Button className={classes.button }>Share to...</Button>
-                  <Button className={classes.button }>Copy Link</Button>
-                  <Button className={classes.button }>Embed</Button>
-                  <Button onClick={() => setOpenProfileInfo(false)} className={classes.button}>Cancel</Button>
-                </div>
-              </div>
-            </Modal>
+            
+              <Modal 
+                open={openProfileInfo} 
+                onClose={() => setOpenProfileInfo(false)}
+                className={classes.modal}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                  timeout: 500,
+                }}
+              >
+                <Fade in={openProfileInfo}>
+                  <div style={modalStyle} className={classes.paper}>
+                    <div className={classes.buttons}>
+                      <Button onClick={handleLogout} className={classes.redButton }>Logout</Button>
+                      <Button className={classes.redButton }>Report</Button>
+                      <Button className={classes.button }>Go to post</Button>
+                      <Button className={classes.button }>Share to...</Button>
+                      <Button className={classes.button }>Copy Link</Button>
+                      <Button className={classes.button }>Embed</Button>
+                      <Button onClick={() => setOpenProfileInfo(false)} className={classes.button}>Cancel</Button>
+                    </div>
+                  </div>
+                </Fade>
+              </Modal>
+            
             <Avatar
               onClick={() => setOpenProfileInfo(true)}
               className="app__headerAvatar"
