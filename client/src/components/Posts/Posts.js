@@ -36,16 +36,18 @@ const Posts = () => {
     <div>
       <div className="posts">
         
+        <FlipMove>
           {userName ? posts.map(post => (
-            <Post
-              user={'David'}
-              key={post._id}
-              postId={post._id}
-              username={post.user}
-              caption={post.caption}
-              imageUrl={post.image}
-            />
-          )) : <div></div>}
+              <Post
+                user={'David'}
+                key={post._id}
+                postId={post._id} 
+                username={post.user}
+                caption={post.caption}
+                imageUrl={post.image}
+              />
+              )) : <div></div>}
+          </FlipMove>
       </div>
     </div>
   )

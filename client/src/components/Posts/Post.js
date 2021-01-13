@@ -7,7 +7,14 @@ import { Button, Menu, MenuItem } from '@material-ui/core'
 import { db } from '../../firebase'
 import { useStateValue } from '../../StateProvider'
 
-const Post = ({ user, username, postId, imageUrl, caption }) => {
+/* 
+  functional components that are styled still be class base component
+  and FlipMove component needs to work only with funcitonal components
+  in order that, we use forwardRef
+*/
+
+const Post = forwardRef(
+  ({ user, username, postId, imageUrl, caption }, ref) => {
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState("")
   const [like, setLike] = useState(false)
@@ -86,9 +93,9 @@ const Post = ({ user, username, postId, imageUrl, caption }) => {
   }
 
   return (
-    <div className="post" >
+    <div className="post" ref={ref}>
       
-      {/* Header post */}
+      {/* Post's Header */}
       <div className="post__header">
         <div className="post__header__title__left">
           <Avatar
@@ -99,7 +106,7 @@ const Post = ({ user, username, postId, imageUrl, caption }) => {
           <h3 className="post__header__name">{username}</h3>
         </div>
         <div className="post__header__title__right">
-          <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+          {/* <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
             <MoreHoriz />
           </Button>
           <Menu
@@ -115,7 +122,7 @@ const Post = ({ user, username, postId, imageUrl, caption }) => {
                 <div className='post__Menu__options'>Delete</div>
               </MenuItem>
             </div>
-          </Menu>
+          </Menu> */}
         </div>
       </div>
 
@@ -193,6 +200,7 @@ const Post = ({ user, username, postId, imageUrl, caption }) => {
     </div>
   )
 }
+)
 
 export default Post
 
