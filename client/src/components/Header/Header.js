@@ -118,6 +118,10 @@ const Header = () => {
     
     auth
       .signInWithEmailAndPassword(email, password)
+      .then(result => {
+        // save users data to allow keep user login when refresh the page
+        localStorage.setItem('user', JSON.stringify(result.user))
+      })
       .catch((error) => alert(error.message));
 
     setOpen(false);
