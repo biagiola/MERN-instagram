@@ -1,13 +1,9 @@
-
 #! /bin/bash
-
-cd codes/js/instagram-clone
-
 # open vs code here
 code .
 
-# start client
+# start client in a new tab
 gnome-terminal --tab -- sh -c  "cd client && yarn start"
 
-# start server
+# start server in a new tab
 gnome-terminal --tab -- sh -c "cd server  && nodemon"
