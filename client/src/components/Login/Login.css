@@ -5,7 +5,11 @@
   background-color: #eee;
 }
 
-.login__page_right {
+.login__page__left {
+  
+}
+
+.login__page__right {
   display: flex;
   flex-direction: column;
   align-self: center;
@@ -28,6 +32,7 @@
 
 .login__botton {
   background-color: #0095F6;
+  font-family: Helvetica,Arial,sans-serif;
   color: white;
   font-weight: 900;
   padding: 10px;
@@ -36,9 +41,8 @@
   cursor: pointer;
 }
 
-.line__divider{
+.login__divider{
   align-self: center;
-  width: 50px;
 }
 
 hr {
@@ -54,6 +58,22 @@ hr {
   margin: 0px 15px;
 }
 
+.signUp {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  align-self: center;
+}
+
+.signUp__title {
+  margin-right: 5px;
+}
+
 .signUp__botton {
-  font-family: Helvetica,Arial,sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  color: #0095F6;
+  border: none;
+  padding: 0px 5px;
+  cursor: pointer;
 }

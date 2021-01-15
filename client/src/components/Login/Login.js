@@ -1,24 +1,74 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TextField from '@material-ui/core/TextField'
 import './Login.css'
+import ImageSlides from './ImageSlides'
+import { auth } from '../../firebase'
+import { actionTypes } from '../../Reducer'
+import { useStateValue } from '../../StateProvider'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [user, setUser] = useState(null)
+  const [{ userName }, dispatch] = useStateValue()
 
-  const handleLogin = () => {}
+  // listening for auth changes
+  useEffect(() => {
+    console.log('authState changed hola')
+    const unsubscribe = auth.onAuthStateChanged(authUser => {
+      if (authUser) {
+        // user is logged in...
+        console.log('authUser.displayName' ,authUser.displayName)
+        setUser(authUser)
+        
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: authUser.displayName
+        })
+
+        console.log('user context', userName)
+
+        if (authUser.displayName) {
+          // dont update username
+        } else {
+          return authUser.updateProfile({
+            displayName: userName,
+          });
+        }
+      } else {
+        setUser(null);
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: null
+        })
+      }
+    })
+
+    return () => {
+     unsubscribe();
+    };
+  }, [userName])
+
+  const handleLogin = (e) => {
+    e.preventDefault()
+    
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(result => {
+        // save users data to allow keep user login when refresh the page
+        localStorage.setItem('user', JSON.stringify(result.user))
+      })
+      .catch((error) => alert(error.message));
+  }
 
   const handleSignUp = () => {}
-  
+
   return (
     <div className="login__page">
       <div className="login__page__left">
-        <img
-          src="https://www.instagram.com/static/images/homepage/home-phones.png/43cc71bb1b43.png"
-          alt="phone"
-        ></img>
+        <ImageSlides/>
       </div>
-      <div className="login__page_right">
+      <div className="login__page__right">
         <img
           className="app__headerImage"
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
@@ -49,11 +99,13 @@ const Login = () => {
             onClick={handleLogin}
           >Log In</button>
         </form>
+        
         <div className="login__divider">
           <hr/>
           <span className="or__divider">OR</span>
           <hr/>
         </div>
+        
         <div className="signUp">
           <div className="signUp__title">Create an account</div>
           <button 
