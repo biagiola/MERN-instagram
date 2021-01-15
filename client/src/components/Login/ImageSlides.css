@@ -4,13 +4,6 @@
   z-index: 0;
 }
 
-/* .container {
-  position: relative;
-  z-index: 100;
-  left: -303px;
-  top: -91px;
-} */
-
 .card-container {
   position: relative;
   max-width: 226px;
@@ -18,15 +11,27 @@
 }
 
 .card {
-  /* border: 3px #f3f3f3 solid; */
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
   transition: all 0.3s linear;
   cursor: pointer;
   background-color: #f3f3f3;
-  /* max-width: 220px; */
   text-align: left;
   margin: 0 auto;
   position: absolute;
   left: 37px;
   top: -523px;
+}
+
+img {
+  position: absolute;
+  top: 15px;
+  transition: opacity .5s ease-in;
+}
+
+img + img { opacity: 0; }
+
+.sliderContainer {
+  position: relative;
+  top: 99px;
+  left: 151px;
 }

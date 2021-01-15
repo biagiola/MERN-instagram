@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import './ImageSlides.css'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import Image from './Image'
 
 const ImageSlides = () => {
-  const [img, setImg] = useState([
-    {value :'d6bf0c928b5a', index: 0},
-    {value: '6f03eb85463c', index: 1}, 
-    {value: 'f0c687aa6ec2', index: 2}, 
-    {value: '842fe5699220', index: 3}, 
-    {value: '0a2d3016f375', index: 4}])
+  //const [current, setCurrent] = useState(0)
+  let current = 0
+  
+  let slides = document.getElementsByClassName("sliderImg")
+  console.log('current', current)
+
+  // slide effect
+  useEffect(() => {
+    const interval = setInterval(function() {
+      for (var i = 0; i < slides.length; i++) {
+        slides[i].style.opacity = 0;
+      }
+      current = (current = (current != slides.length - 1) ? current + 1 : 0)
+      slides[current].style.opacity = 1;
+    }, 5000);
+
+    return () => {
+      return () => clearInterval(interval)
+    }
+  }, [])
 
   return (
     <div className="main">
@@ -18,7 +30,13 @@ const ImageSlides = () => {
         alt="phone"
       ></img>
       <div className="card-container">
-        <Image img={img} />
+        <div className="sliderContainer">
+          <img className="sliderImg" src="https://www.instagram.com/static/images/homepage/screenshot1.jpg/d6bf0c928b5a.jpg" />
+          <img className="sliderImg" src="https://www.instagram.com/static/images/homepage/screenshot2.jpg/6f03eb85463c.jpg" />
+          <img className="sliderImg" src="https://www.instagram.com/static/images/homepage/screenshot3.jpg/f0c687aa6ec2.jpg" />
+          <img className="sliderImg" src="https://www.instagram.com/static/images/homepage/screenshot4.jpg/842fe5699220.jpg" />
+          <img className="sliderImg" src="https://www.instagram.com/static/images/homepage/screenshot5.jpg/0a2d3016f375.jpg" />
+        </div>
       </div>
     </div>
   )
