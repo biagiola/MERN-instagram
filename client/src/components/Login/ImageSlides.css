@@ -22,13 +22,14 @@
   top: -523px;
 }
 
-img {
+.sliderImg {
   position: absolute;
-  top: 15px;
+  top: -622px;
+  right: 100px;
   transition: opacity .5s ease-in;
 }
 
-img + img { opacity: 0; }
+.sliderImg + .sliderImg { opacity: 0; }
 
 .sliderContainer {
   position: relative;
