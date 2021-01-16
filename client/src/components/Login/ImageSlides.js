@@ -1,29 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import './ImageSlides.css'
+import { useStateValue } from '../../StateProvider'
 
 const ImageSlides = () => {
-  //const [current, setCurrent] = useState(0)
   let current = 0
+  const [{ userName }, dispatch] = useStateValue()
   
   let slides = document.getElementsByClassName("sliderImg")
+  console.log('slides', slides)
   console.log('current', current)
 
   // slide effect
   useEffect(() => {
     const interval = setInterval(function() {
-      for (var i = 0; i < slides.length; i++) {
-        slides[i].style.opacity = 0;
-      }
-      current = (current = (current != slides.length - 1) ? current + 1 : 0)
-      slides[current].style.opacity = 1;
-    }, 5000);
+        // slides just exists in the login page
+        if (slides.length == 5) {
+          for (var i = 0; i < slides.length; i++) {
+            slides[i].style.opacity = 0;
+          }
+          current = (current = (current != slides.length - 1) ? current + 1 : 0)
+          slides[current].style.opacity = 1;
+        }
+      }, 5000);
 
     return () => {
       return () => clearInterval(interval)
     }
-  }, [])
+  }, [userName])
 
   return (
+    
     <div className="main">
       <img
         src="https://www.instagram.com/static/images/homepage/home-phones.png/43cc71bb1b43.png"
