@@ -1,20 +1,32 @@
 .login__page {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
   background-color: #eee;
+  height: 100%;
+}
+
+.login__page__top {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-evenly;
 }
 
 .login__page__left {
-  
+  position: relative;
+  right: 150px;
 }
 
 .login__page__right {
   display: flex;
   flex-direction: column;
-  align-self: center;
-  padding: 25px;
+  
+}
+
+.login__signIn__form {
   border: 1px solid lightgray;
+  text-align: center;
+  padding: 25px;
+  margin-top: 7rem;
 }
 
 .login__page__form {
@@ -76,4 +88,34 @@ hr {
   border: none;
   padding: 0px 5px;
   cursor: pointer;
+}
+
+.getTheApp {
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.google__apple__stores {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.login__footer {
+  padding-top: 6rem;
+  text-align: center;
+  align-self: center;
+}
+
+.login__footer > ul {
+  display: block;
+  max-width: 660px;
+  
+}
+
+.login__footer > ul > ul > li {
+  display: inline;
+  padding: 5px;
+  margin-bottom: 5px;
+  color: #636363;
 }
