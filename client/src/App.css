@@ -1,11 +1,26 @@
 * {
   margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
 }
 
 .app {
   background-color: #fafafa;
-  padding-bottom: 100px;
 }
 
+body, #root, .app {
+  box-sizing: content-box; /* this help when you click in a modal, avoid everything behind the modal move to the left cos the overflow-y turn off*/
+  height: 100%;
+}
 
 
