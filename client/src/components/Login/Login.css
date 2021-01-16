@@ -1,19 +1,17 @@
 .login__page {
   display: flex;
   flex-direction: column;
-  background-color: #eee;
   height: 100%;
 }
 
 .login__page__top {
   display: flex;
   flex-direction: row;
-  justify-content:space-evenly;
+  justify-content: center;
 }
 
 .login__page__left {
-  position: relative;
-  right: 150px;
+  display: flex;
 }
 
 .login__page__right {
@@ -24,6 +22,7 @@
 
 .login__signIn__form {
   border: 1px solid lightgray;
+  background-color: rgb(242, 242, 242);
   text-align: center;
   padding: 25px;
   margin-top: 7rem;
@@ -73,12 +72,13 @@ hr {
 .signUp {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   margin-top: 10px;
-  align-self: center;
 }
 
 .signUp__title {
   margin-right: 5px;
+  
 }
 
 .signUp__botton {
@@ -102,7 +102,7 @@ hr {
 }
 
 .login__footer {
-  padding-top: 6rem;
+  padding: 6rem 0;
   text-align: center;
   align-self: center;
 }
@@ -110,12 +110,12 @@ hr {
 .login__footer > ul {
   display: block;
   max-width: 660px;
-  
 }
 
 .login__footer > ul > ul > li {
   display: inline;
   padding: 5px;
   margin-bottom: 5px;
-  color: #636363;
+  color: #999999;
+  cursor: pointer;
 }

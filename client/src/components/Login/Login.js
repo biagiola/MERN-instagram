@@ -63,14 +63,18 @@ const Login = () => {
       .catch((error) => alert(error.message));
   }
 
-  const handleSignUp = () => {}
+  const handleSignUp = () => {
+    
+  }
 
   return (
     <div className="login__page">
       <div className="login__page__top">
+        {/* left */}
         <div className="login__page__left">
           <ImageSlides/>
         </div>
+        {/* right */}
         <div className="login__page__right">
           <div className="login__signIn__form">
             <img
@@ -129,6 +133,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+
       <div className="login__footer">
         <ul>
           <ul>
