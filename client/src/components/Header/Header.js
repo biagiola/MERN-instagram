@@ -141,11 +141,14 @@ const Header = () => {
 
   const handleLogout = () => {
     auth.signOut()
-    
-    dispatch({
-      type: actionTypes.SET_USER,
-      user: null
-    })
+      .then(result => {
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: null
+        })
+
+        localStorage.removeItem('user')
+      }).catch(error => alert(error.message))
 
     // close the modal
     setOpenProfileInfo(false)
@@ -245,7 +248,7 @@ const Header = () => {
 
           <div>{userName}</div>
           {/* Logout modal */}
-          <IconButton>
+          
             
               <Modal 
                 open={openProfileInfo} 
@@ -271,9 +274,9 @@ const Header = () => {
                   </div>
                 </Fade>
               </Modal>
-            
+          <IconButton
+            onClick={() => setOpenProfileInfo(true)}>  
             <Avatar
-              onClick={() => setOpenProfileInfo(true)}
               className="app__headerAvatar"
               alt={userName}
               src="/static/images/avatar/1.jpg"
