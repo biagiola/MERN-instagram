@@ -30,8 +30,10 @@ const Posts = () => {
     return () => clearInterval(syncFeed)
   }, [newPosts])
 
-  useEffect(() => {
-  }, [posts])
+  // filter post (from the dom)
+  const handleFilter = (id) => {
+    setPosts( posts.filter( postdata => (postdata._id !== id) ))
+  }
   
   console.log('posts are >>>', posts)
   console.log('newPosts are >>>', newPosts)
@@ -63,6 +65,7 @@ const Posts = () => {
                 username={post.user}
                 caption={post.caption}
                 imageUrl={post.image}
+                filterPost={ dato => handleFilter(dato)}
               />
               )) : <div></div>}
           </FlipMove>
