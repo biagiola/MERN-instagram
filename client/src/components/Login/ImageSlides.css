@@ -1,0 +1,37 @@
+.main {
+  
+}
+
+
+.card-container {
+  position: relative;
+  max-width: 226px;
+  margin: 0 auto;
+}
+
+.card {
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s linear;
+  cursor: pointer;
+  background-color: #f3f3f3;
+  text-align: left;
+  margin: 0 auto;
+  position: absolute;
+  left: 37px;
+  top: -523px;
+}
+
+.sliderImg {
+  position: absolute;
+  top: -622px;
+  right: 100px;
+  transition: opacity .5s ease-in;
+}
+
+.sliderImg + .sliderImg { opacity: 0; }
+
+.sliderContainer {
+  position: relative;
+  top: 99px;
+  left: 151px;
+}
