@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react"
 import { storage } from "../../firebase"
+import FlipMove from 'react-flip-move'
 import "./ImageUpload.css"
 import { Input, Button } from "@material-ui/core"
 import axios from '../../axios'
@@ -66,37 +67,55 @@ const ImageUpload = () => {
     )
   }
 
+  const handleUploadErrorMassage = () => {
+    alert('File was not selected')
+  }
+
   return (
     <div className="imageupload">
+      {/* <FlipMove> */}
+        <progress className="imageupload__progress" value={progress} max="100" />
 
-      <progress className="imageupload__progress" value={progress} max="100" />
+        <Input
+          placeholder="Enter a caption"
+          value={caption}
+          onChange={e => setCaption(e.target.value)}
+          disableUnderline={true} 
+          autoFocus={true}
+          style={{ padding: "0 10px"}}
 
-      <Input
-        placeholder="Enter a caption"
-        value={caption}
-        onChange={e => setCaption(e.target.value)}
-        disableUnderline={true} 
-        autoFocus={true}
-
-      />
-      <div className="imageupload__bottom">
-        <Button className="imageupload__button" onClick={handleUpload}>
-          Upload
-        </Button>
-
-        <label className="uploadPhoto " for="uploadPhoto">Select File</label>
-        <input 
-          type="file" 
-          /* style={{display: "none"}}  */
-          id="uploadPhoto" 
-          onChange={handleChange} 
         />
-      </div>
-      
-      <br />
+        
+        <div className="imageupload__bottom">
+          {
+            image ?
+            <Button 
+              className="imageupload__button__selected" 
+              onClick={handleUpload}>
+              Upload
+            </Button>
+            :
+            <Button 
+              className="imageupload__button" 
+              onClick={handleUploadErrorMassage}>
+              Upload
+            </Button>
+          }
 
+          <label className="uploadPhoto " htmlFor="uploadPhoto">Select File</label>
+          <input 
+            type="file" 
+            /* style={{display: "none"}}  */
+            id="uploadPhoto" 
+            onChange={handleChange} 
+          />
+        </div>
+          
+        <br/>
+
+      {/* </FlipMove> */}
     </div>
-  );
-};
+  )
+}
 
 export default ImageUpload
