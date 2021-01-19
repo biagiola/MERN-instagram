@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { TextField, IconButton } from '@material-ui/core'
+import { Button, TextField, Input, makeStyles, Modal, Fade, Backdrop } from '@material-ui/core'
 import './Login.css'
 import ImageSlides from './ImageSlides'
 import { auth } from '../../firebase'
@@ -8,15 +8,68 @@ import { useStateValue } from '../../StateProvider'
 import PlayStore from '../../assets/playStore.png'
 import AppStore from '../../assets/appStore.png'
 
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    height: "150px",
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+const useStyles = makeStyles(theme => ({
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  paper: {
+    position: "absolute",
+    width: 300,
+    backgroundColor: theme.palette.background.paper,
+    border: "0",
+    borderRadius: "15px",
+    boxShadow: theme.shadows[5],
+    //padding: theme.spacing(0, 0, 0), // button, sides, and top
+    padding: "35px",
+  },
+  signUpForm: {
+    dispplay: "flex",
+    flexDirection: "column",
+    
+  },
+  inputs: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  button: {
+    display: "flex",
+    flexDirection: "column",
+    alignContent: "center",
+    paddingTop: "15px"
+  }
+}))
+
 const Login = () => {
+  const classes = useStyles()
+  const [modalStyle] = useState(getModalStyle)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [emailSignUp, setEmailSignUp] = useState('')
+  const [passwordSignUp, setPasswordSignUp] = useState('')
+  
+  const [modalSignUpOpen, setModalSignUpOpen] = useState(false)
+  
   const [user, setUser] = useState(null)
   const [{ userName }, dispatch] = useStateValue()
 
   // listening for auth changes
   useEffect(() => {
-    console.log('authState changed hola')
+    console.log('authState changed')
     const unsubscribe = auth.onAuthStateChanged(authUser => {
       if (authUser) {
         // user is logged in...
@@ -38,7 +91,7 @@ const Login = () => {
           });
         }
       } else {
-        setUser(null);
+        setUser(null)
         dispatch({
           type: actionTypes.SET_USER,
           user: null
@@ -47,7 +100,7 @@ const Login = () => {
     })
 
     return () => {
-     unsubscribe();
+     unsubscribe()
     };
   }, [userName])
 
@@ -60,14 +113,23 @@ const Login = () => {
         // save users data to allow keep user login when refresh the page
         localStorage.setItem('user', JSON.stringify(result.user))
       })
-      .catch((error) => alert(error.message));
+      .catch(error => alert(error.message))
   }
 
-  const handleSignUp = () => {
+  const handleSignUp = (e) => {
+    e.preventDefault();
     
+    console.log('email password signUp', emailSignUp, passwordSignUp)
+
+    auth
+      .createUserWithEmailAndPassword(emailSignUp, passwordSignUp)
+      .catch(error => alert(error.message))
+
+      setModalSignUpOpen(false)
   }
 
   return (
+    !userName ? (
     <div className="login__page">
       <div className="login__page__top">
         {/* left */}
@@ -115,12 +177,54 @@ const Login = () => {
               <hr/>
             </div>
             
+            {/* Sign in Modal */}
+            <Modal 
+              open={modalSignUpOpen} 
+              onClose={() => setModalSignUpOpen(false)}
+              className={classes.modal}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
+              }}>
+              {/* <Fade in={modalSignUpOpen}> */}
+                <div style={modalStyle} className={classes.paper}>
+                  <form className={classes.signUpForm}>
+                    <center>
+                      <img
+                        className="app__headerImage"
+                        src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                        alt=""
+                      />
+                    </center>
+
+                    <div className={classes.inputs}>
+                      <Input
+                        placeholder="email"
+                        type="text"
+                        value={emailSignUp}
+                        onChange={(e) => setEmailSignUp(e.target.value)}
+                      />
+                      <Input
+                        placeholder="password"
+                        type="password"
+                        value={passwordSignUp}
+                        onChange={(e) => setPasswordSignUp(e.target.value)}
+                      />
+                    </div>
+                    <div className={classes.button}>
+                      <Button onClick={handleSignUp}>Sign Up</Button>
+                    </div>
+                  </form>
+                </div>
+              {/* </Fade> */}
+            </Modal>
+
             <div className="signUp">
               <div className="signUp__title">Create an account</div>
               <button 
-                disabled={!email}
                 className="signUp__botton"
-                onClick={handleSignUp}
+                onClick={() => setModalSignUpOpen(true)}
               >Sign Up</button>
             </div>
 
@@ -160,6 +264,7 @@ const Login = () => {
         </ul>
       </div>
     </div>
+   ) : ('')
   )
 }
 
