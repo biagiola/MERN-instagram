@@ -7,7 +7,6 @@ import { actionTypes } from '../../Reducer'
 import { Button, Avatar, makeStyles, Modal, Input, IconButton, Backdrop, Fade } from "@material-ui/core"
 import { FavoriteBorder, Explore, Home } from '@material-ui/icons'
 import { Icon } from 'semantic-ui-react'
-import FlipMove from 'react-flip-move'
 
 function getModalStyle() {
   const top = 50;
@@ -62,21 +61,16 @@ const Header = () => {
   const classes = useStyles()
   const [modalStyle] = useState(getModalStyle)
   
-  const [open, setOpen] = useState(false)
-  const [registerOpen, setRegisterOpen] = useState(false)
   const [openProfileInfo, setOpenProfileInfo] = useState(false)
 
   const [username, setUsername] = useState('')
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
 
   const [user, setUser] = useState(null)
   const [{ userName }, dispatch] = useStateValue()
 
   // listening for auth changes
-  useEffect(() => {
+  /* useEffect(() => {
     console.log('authState changed hola')
-
     const unsubscribe = auth.onAuthStateChanged(authUser => {
       if (authUser) {
         // user is logged in...
@@ -104,50 +98,26 @@ const Header = () => {
           user: null
         })
       }
-
+      //localStorage.removeItem('user')
     })
 
     return () => {
       unsubscribe();
     };
-  }, [user])
+  }, [user]) */
 
-
-  const handleLogin = (e) => {
-    e.preventDefault()
-    
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then(result => {
-        // save users data to allow keep user login when refresh the page
-        localStorage.setItem('user', JSON.stringify(result.user))
-      })
-      .catch((error) => alert(error.message));
-
-    setOpen(false);
-  }
-
-  const handleRegister = (e) => {
-    e.preventDefault();
-    
-    console.log('email password register', email, password)
-
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .catch((error) => alert(error.message));
-
-    setRegisterOpen(false);
-  };
 
   const handleLogout = () => {
     auth.signOut()
       .then(result => {
         dispatch({
           type: actionTypes.SET_USER,
-          user: null
+          userName: null
         })
 
         localStorage.removeItem('user')
+
+
       }).catch(error => alert(error.message))
 
     // close the modal
@@ -156,69 +126,6 @@ const Header = () => {
 
   return (
     <div>
-      {/* Register modal */}
-      <Modal open={registerOpen} onClose={() => setRegisterOpen(false)}>
-        <div style={modalStyle} className={classes.paper}>
-          <form className="app__login">
-            <center>
-              <img
-                className="app__headerImage"
-                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-                alt=""
-              />
-            </center>
-            <Input
-              type="text"
-              placeholder="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <Input
-              placeholder="email"
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Input
-              placeholder="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button onClick={handleRegister}>Register</Button>
-          </form>
-        </div>
-      </Modal>
-
-      {/* Sign in Modal */}
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <div style={modalStyle} className={classes.paper}>
-          <form className="app__login">
-            <center>
-              <img
-                className="app__headerImage"
-                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-                alt=""
-              />
-            </center>
-
-            <Input
-              placeholder="email"
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Input
-              placeholder="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button onClick={handleLogin}>Login</Button>
-          </form>
-        </div>
-      </Modal>
-
       {/* Header */}
       <div className="app__header">
       <img
@@ -248,45 +155,45 @@ const Header = () => {
 
           <div>{userName}</div>
           {/* Logout modal */}
-          
             
-              <Modal 
-                open={openProfileInfo} 
-                onClose={() => setOpenProfileInfo(false)}
-                className={classes.modal}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                  timeout: 500,
-                }}
-              >
-                <Fade in={openProfileInfo}>
-                  <div style={modalStyle} className={classes.paper}>
-                    <div className={classes.buttons}>
-                      <Button onClick={handleLogout} className={classes.redButton }>Logout</Button>
-                      <Button className={classes.redButton }>Report</Button>
-                      <Button className={classes.button }>Go to post</Button>
-                      <Button className={classes.button }>Share to...</Button>
-                      <Button className={classes.button }>Copy Link</Button>
-                      <Button className={classes.button }>Embed</Button>
-                      <Button onClick={() => setOpenProfileInfo(false)} className={classes.button}>Cancel</Button>
-                    </div>
-                  </div>
-                </Fade>
-              </Modal>
+          <Modal 
+            open={openProfileInfo} 
+            onClose={() => setOpenProfileInfo(false)}
+            className={classes.modal}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={openProfileInfo}>
+              <div style={modalStyle} className={classes.paper}>
+                <div className={classes.buttons}>
+                  <Button className={classes.redButton }>Report</Button>
+                  <Button className={classes.button }>Go to post</Button>
+                  <Button className={classes.button }>Share to...</Button>
+                  <Button className={classes.button }>Copy Link</Button>
+                  <Button className={classes.button }>Embed</Button>
+                  <Button onClick={() => setOpenProfileInfo(false)} className={classes.button}>Cancel</Button>
+                  <Button onClick={handleLogout} className={classes.redButton }>Logout</Button>
+                </div>
+              </div>
+            </Fade>
+          </Modal>
+          
           <IconButton
             onClick={() => setOpenProfileInfo(true)}>  
             <Avatar
               className="app__headerAvatar"
               alt={userName}
-              src="/static/images/avatar/1.jpg"
+              /* src="/static/images/avatar/1.jpg" */
             />
           </IconButton>
         </div>
       ) : (
         <form className="app__loginHome">
-          <Button onClick={() => setOpen(true)}>Login</Button>
-          <Button onClick={() => setRegisterOpen(true)}>Sign Up</Button>
+          <Button /* onClick={() => setOpen(true)} */>Login</Button>
+          <Button /* onClick={() => setRegisterOpen(true)} */>Sign Up</Button>
         </form>
       )}
     </div>
