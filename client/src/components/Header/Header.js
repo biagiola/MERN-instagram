@@ -66,62 +66,34 @@ const Header = () => {
   const [username, setUsername] = useState('')
 
   const [user, setUser] = useState(null)
-  const [{ userName }, dispatch] = useStateValue()
-
-  // listening for auth changes
-  /* useEffect(() => {
-    console.log('authState changed hola')
-    const unsubscribe = auth.onAuthStateChanged(authUser => {
-      if (authUser) {
-        // user is logged in...
-        console.log('authUser.displayName' ,authUser.displayName)
-        setUser(authUser)
-        
-        dispatch({
-          type: actionTypes.SET_USER,
-          user: authUser.displayName
-        })
-
-        console.log('user context', userName)
-
-        if (authUser.displayName) {
-          // dont update username
-        } else {
-          return authUser.updateProfile({
-            displayName: username,
-          });
-        }
-      } else {
-        setUser(null);
-        dispatch({
-          type: actionTypes.SET_USER,
-          user: null
-        })
-      }
-      //localStorage.removeItem('user')
-    })
-
-    return () => {
-      unsubscribe();
-    };
-  }, [user]) */
-
+  const [{ userName, userEmail }, dispatch] = useStateValue()
 
   const handleLogout = () => {
     auth.signOut()
       .then(result => {
         dispatch({
+          type: actionTypes.SET_EMAIL,
+          userEmail: null
+          
+        })
+
+        dispatch({
           type: actionTypes.SET_USER,
           userName: null
         })
+        dispatch({
+          type: actionTypes.SET_EMAIL,
+          userEmail: null
+        })
+        /* dispatch({
+          type: actionTypes.SET_NEW_POST,
+          newPosts: []
+        }) */
 
         localStorage.removeItem('user')
-
+        localStorage.removeItem('email')
 
       }).catch(error => alert(error.message))
-
-    // close the modal
-    setOpenProfileInfo(false)
   }
 
   return (
@@ -133,7 +105,7 @@ const Header = () => {
         src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         alt="logo"
       />
-      {userName ? (
+      {userEmail ? (
         <div className="app__headerRight">
           
           <div className="header__icons">
