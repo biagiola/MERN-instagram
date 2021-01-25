@@ -1,33 +1,44 @@
 export const initialState = {
   userName: null,
+  userEmail: null,
+  newPosts: []
 }
 
 // if there is and user's value in the storage
-const data = JSON.parse(localStorage.getItem('user'))
-if (data) {
-  console.log('reducer data user', data)
-  initialState.user = data
-}
+const user = JSON.parse(localStorage.getItem('user'))
+const email = JSON.parse(localStorage.getItem('email'))
+
+console.log('reducer user', user)
+
+if (user) { initialState.userName = user } else { initialState.userName = null }
+if (email) { initialState.userEmail = email } else { initialState.userEmail = null }
+
 
 export const actionTypes = {
   SET_USER: 'SET_USER',
-  SET_USER_LOCALSTORAGE: 'SET_USER_LOCALSTORAGE'
+  SET_EMAIL: 'SET_EMAIL',
+  SET_NEW_POST: 'SET_NEW_POST'
 }
 
 const reducer = (state, action) => {
-
-  console.log(action)
-
+  
   switch (action.type) {
     case actionTypes.SET_USER:
       return {
         ...state,
-        userName: action.user
+        userName: action.userName
       }
 
-    case actionTypes.SET_USER_LOCALSTORAGE:
+    case actionTypes.SET_EMAIL:
       return {
-        user: action.user
+        ...state,
+        userEmail: action.userEmail
+      }
+
+    case actionTypes.SET_NEW_POST:
+      return {
+        ...state,
+        newPosts: action.post
       }
 
     default:

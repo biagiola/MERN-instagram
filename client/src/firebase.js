@@ -1,20 +1,21 @@
+//import firebase from "firebase"
 import firebase from 'firebase'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAvO3xldbq0_IlRO0oivmtQQqpCicUiMBw",
-    authDomain: "facebookpreview-f51b0.firebaseapp.com",
-    databaseURL: "https://facebookpreview-f51b0.firebaseio.com",
-    projectId: "facebookpreview-f51b0",
-    storageBucket: "facebookpreview-f51b0.appspot.com",
-    messagingSenderId: "641170722036",
-    appId: "1:641170722036:web:879082f515a8cfa4dc22a1"
-  };
+  apiKey: "AIzaSyCt7H4WUDBAHbRWOy7dAbH-FVzZ9AWtCdM",
+  authDomain: "instagram-clone-cf324.firebaseapp.com",
+  databaseURL: "https://instagram-clone-cf324.firebaseio.com",
+  projectId: "instagram-clone-cf324",
+  storageBucket: "instagram-clone-cf324.appspot.com",
+  messagingSenderId: "5413006022",
+  appId: "1:5413006022:web:139c80bde7dc5944bc45c7"
+}
 
-const firebaseApp = firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig)
 
-const auth = firebase.auth()
-const provider = new firebase.auth.GoogleAuthProvider()
-const db = firebase.firestore()
+const db = firebase.firestore();
+const auth = firebase.auth();
+const storage = firebase.storage();
 
-export { auth, provider }
-export default db
+export { db, auth, storage }
+
