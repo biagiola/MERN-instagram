@@ -32,6 +32,10 @@
   padding-bottom: 0px;
 }
 
+.post__options {
+  padding: 15px;
+}
+
 .post__header__name {
   padding-bottom: 25px !important;
   margin-top: 8px;

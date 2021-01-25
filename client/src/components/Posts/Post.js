@@ -26,7 +26,7 @@ const Post = forwardRef(
   }
   // modal close
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(null)
   }
 
   useEffect(() => {
@@ -94,7 +94,7 @@ const Post = forwardRef(
           <Avatar
             className="post__avatar"
             alt={username}
-            src="/static/images/avatar/1.jpg"
+            /* src="/static/images/avatar/1.jpg" */
           />
           <h3 className="post__header__name">{username}</h3>
         </div>
@@ -171,14 +171,14 @@ const Post = forwardRef(
       </div>
 
       {/* New comment form */}
-      {user && (
+      {userName && (
         <form className="post__commentBox">
           <input
             className="post__input"
             type="text"
             placeholder="Add a comment..."
             value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            onChange={e => setComment(e.target.value)}
           />
           <button
             disabled={!comment}

@@ -7,13 +7,7 @@ import './Posts.css'
 
 const Posts = () => {
   const [posts, setPosts] = useState([]) // posts comming from db
-  const [{ userName, newPosts }] = useStateValue()
-
-  // show posts from database
-  useEffect(() => {
-    syncFeed() 
-    return () => clearInterval(syncFeed)
-  }, [])
+  const [{ userName, userEmail, newPosts }] = useStateValue()
 
   const syncFeed = () => {
     axios.get('posts/retrieve')
@@ -28,7 +22,7 @@ const Posts = () => {
   useEffect(() => {
     syncFeed()
     return () => clearInterval(syncFeed)
-  }, [newPosts])
+  }, [newPosts, userEmail])
 
   // filter post (from the dom)
   const handleFilter = (id) => {
@@ -42,30 +36,29 @@ const Posts = () => {
     <div>
       <div className="posts" >
 
-        <FlipMove>
         {newPosts.length ? newPosts.map( response => (
-          <Post
-            user={'David'}
-            key={response._id}
-            postId={response._id} 
-            username={response.user}
-            caption={response.caption}
-            imageUrl={response.image}
-          />
-        )) : <div></div>
+          <FlipMove>
+            <Post
+              user={'David'}
+              key={response._id}
+              postId={response._id} 
+              username={response.user}
+              caption={response.caption}
+              imageUrl={response.image}
+            />
+          </FlipMove>
+        )) : ''
         }
-        </FlipMove>
         
         <FlipMove>
-          {userName ? posts.map(post => (
+          {userEmail ? posts.map(post => (
               <Post
-                user={'David'}
                 key={post._id}
                 postId={post._id} 
                 username={post.user}
                 caption={post.caption}
                 imageUrl={post.image}
-                filterPost={ dato => handleFilter(dato)}
+                filterPost={ dato => handleFilter(dato) }
               />
               )) : <div></div>}
           </FlipMove>
