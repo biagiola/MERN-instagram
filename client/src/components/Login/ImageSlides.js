@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import './ImageSlides.css'
 import { useStateValue } from '../../StateProvider'
 
 const ImageSlides = () => {
   let current = 0
-  const [{ userName }, dispatch] = useStateValue()
+  const [{ userName }] = useStateValue()
   
   let slides = document.getElementsByClassName("sliderImg")
-  console.log('slides', slides)
-  console.log('current', current)
 
   // slide effect
   useEffect(() => {
