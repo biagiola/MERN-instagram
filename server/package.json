@@ -1,7 +1,7 @@
 {
-  "name": "facebook-clone-backend",
+  "name": "server-mern",
   "version": "1.0.0",
-  "description": "server side",
+  "description": "Backend for our intagram db",
   "main": "server.js",
   "author": "David Biagiola",
   "license": "MIT",
@@ -13,10 +13,12 @@
     "mongoose": "^5.10.9",
     "multer": "^1.4.2",
     "multer-gridfs-storage": "^4.2.0",
-    "path": "^0.12.7",
-    "pm2": "^4.5.0"
+    "path": "^0.12.7"
   },
   "scripts": {
-    "start": "pm2-runtime start ecosystem.config.js --env production"
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
