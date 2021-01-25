@@ -45,11 +45,9 @@ if (process.env.NODE_ENV === 'production') {
   });
  } */
 
-
 // DB config
-const mongoURI = 'mongodb+srv://biagiola:holaquetal123@cluster0.7y2eu.mongodb.net/instagramclone?retryWrites=true&w=majority&ssl=true'
+const mongoURI = 'mongodb+srv://<username>:<password>@cluster0.7y2eu.mongodb.net/<clustercollection>?retryWrites=true&w=majority&ssl=true'
 // process.env.MONGODB_URI is our heroku config variable
-
 try {
   mongoose.connect(mongoURI, {
     useFindAndModify: false,
@@ -69,44 +67,11 @@ try {
   console.log('connect Server is not ok', error)
 }
 
-/* try {
-  const conn = mongoose.createConnection(mongoURI, {
-    useFindAndModify: false,
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    poolSize: 10, 
-    bufferMaxEntries: 0,
-    connectTimeoutMS: 30000, 
-    socketTimeoutMS: 65000,
-    keepAlive: true,
-    ssl: true
-  })
-  console.log('connect conn is ok')
-
-  // image storage
-  let gfs
-  conn.once('open', () => {
-    console.log('DB server Connected')
-
-    gfs = Grid(conn.db, mongoose.mongo)
-    gfs.collection('images') 
-  })
-} catch (error) {
-  console.log('connect conn is not ok', error)
-} */
-
 // Routes
 const PostRouter = require('./routes/PostRouter')
 app.use('/posts', PostRouter)
 const UserRouter = require('./routes/UserRouter')
 app.use('/user', UserRouter)
-//const PostCommentRouter = require('./routes/PostComments');
-//app.use('/comments', PostCommentRouter);
-
 
 // listen
 server.listen(PORT, () => console.log(`listening on localhost:${PORT}`))
-
-
-
