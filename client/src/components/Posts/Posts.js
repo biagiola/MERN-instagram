@@ -49,7 +49,7 @@ const Posts = () => {
             )) : ''
         }
         
-        <FlipMove key={Math.random()}>
+        <FlipMove>
           {userEmail ? posts.map(post => (
             <Post
               key={post._id}
