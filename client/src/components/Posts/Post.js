@@ -6,6 +6,7 @@ import { MoreHoriz, Edit, DeleteOutline } from '@material-ui/icons'
 import { Button, IconButton, Menu, MenuItem } from '@material-ui/core'
 import { db } from '../../firebase'
 import { useStateValue } from '../../StateProvider'
+import FlipMove from 'react-flip-move'
 
 /*functional components that are styled still be class base component
   and FlipMove component needs to work only with functional components
@@ -64,17 +65,21 @@ const Post = forwardRef(
   const handleDelete = e => {
     e.preventDefault()
 
-    axios.delete( 'posts/delete/' + postId )
-      .then( res => {
-        console.log( res.data )
-        if(res.data.value === true) {
-          console.log('res value', res.data.value)
-          // we send the deleted comment id to filtered from the dom
-          filterPost(res.data.id)
-          console.log('Post.js handleDelete res.data.id', res.data.id)
-        }
-      })
-      .catch( err => console.log( 'error', err ) )
+    if( userName === username ) {
+      axios.delete( 'posts/delete/' + postId )
+        .then( res => {
+          console.log( res.data )
+          if(res.data.value === true) {
+            console.log('res value', res.data.value)
+            // we send the deleted comment id to filtered from the dom
+            filterPost(res.data.id)
+            console.log('Post.js handleDelete res.data.id', res.data.id)
+          }
+        })
+        .catch( err => console.log( 'error', err ) )
+    } else {
+      alert('Unauthorized :( !!!')
+    }
   }
 
   const handleLikeButton = () => {
@@ -86,6 +91,7 @@ const Post = forwardRef(
   }
 
   return (
+    
     <div className="post" ref={ref}>
       
       {/* Post's Header */}
