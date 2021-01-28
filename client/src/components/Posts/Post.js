@@ -12,7 +12,10 @@ import FlipMove from 'react-flip-move'
   and FlipMove component needs to work only with functional components
   in order that, we use forwardRef  */
 const Post = forwardRef(
-  ({ user, username, postId, imageUrl, caption, filterPost }, ref) => {
+  ({ username, postId, imageUrl, caption, filterPost }, ref) => {
+
+    console.log('post postId', postId)
+
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState("")
   const [like, setLike] = useState(false)
@@ -55,9 +58,14 @@ const Post = forwardRef(
     e.preventDefault()
 
     db.collection("posts").doc(postId).collection("comments").add({
+      id: Date.now(),
       text: comment,
       username: userName,
     })
+    /* db.collection("posts").doc(postId).collection("comments").push({
+      text: comment,
+      username: userName,
+    }) */
     setComment("")
   }
 
@@ -163,8 +171,9 @@ const Post = forwardRef(
       {/* Comments */}
       <div className="post__comments">
         {comments.map(comment => (
-          <div className="post__comment" key={Math.floor()}>
+          <div className="post__comment" key={comment.id}>
             <p>
+              { console.log(comment) }
               <b>{comment.username}</b> {comment.text}
             </p>
             <div className="comment__like">
