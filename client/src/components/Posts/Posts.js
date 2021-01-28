@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import axios from '../../axios'
+//import axios from 'axios'
 import { useStateValue } from '../../StateProvider'
-import FlipMove from 'react-flip-move'
 import Post from './Post'
 import './Posts.css'
+import FlipMove from 'react-flip-move'
 
 const Posts = () => {
   const [posts, setPosts] = useState([]) // posts comming from db
   const [{ userName, userEmail, newPosts }] = useStateValue()
 
   const syncFeed = () => {
-    axios.get('posts/retrieve')
+    axios.get('/posts/retrieve/')
       .then(res => {
         console.log(res.data)
         setPosts(res.data)
@@ -34,10 +35,9 @@ const Posts = () => {
 
   return (
     <div>
-      <div className="posts" >
+      <div className="posts">
 
         {newPosts.length ? newPosts.map( response => (
-          <FlipMove>
             <Post
               user={'David'}
               key={response._id}
@@ -46,22 +46,21 @@ const Posts = () => {
               caption={response.caption}
               imageUrl={response.image}
             />
-          </FlipMove>
-        )) : ''
+            )) : ''
         }
         
-        <FlipMove>
+        <FlipMove key={Math.random()}>
           {userEmail ? posts.map(post => (
-              <Post
-                key={post._id}
-                postId={post._id} 
-                username={post.user}
-                caption={post.caption}
-                imageUrl={post.image}
-                filterPost={ dato => handleFilter(dato) }
-              />
-              )) : <div></div>}
-          </FlipMove>
+            <Post
+              key={post._id}
+              postId={post._id} 
+              username={post.user}
+              caption={post.caption}
+              imageUrl={post.image}
+              filterPost={ dato => handleFilter(dato) }
+            />
+            )) : ''}
+        </FlipMove>
       </div>
     </div>
   )
