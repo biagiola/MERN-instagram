@@ -1,11 +1,12 @@
-import React, { useState, useRef } from "react"
-import { storage } from "../../firebase"
-import FlipMove from 'react-flip-move'
-import "./ImageUpload.css"
-import { Input, Button } from "@material-ui/core"
+import React, { useState, useRef } from 'react'
+import { storage } from '../../firebase'
+import { Input, Button } from '@material-ui/core'
+import { InsertEmoticon }from '@material-ui/icons'
 import axios from '../../axios'
+import EmojiPicker from 'emoji-picker-react'
 import { actionTypes } from '../../Reducer'
 import { useStateValue } from '../../StateProvider'
+import './ImageUpload.css'
 
 const ImageUpload = () => {
   const [image, setImage] = useState(null)
@@ -13,6 +14,7 @@ const ImageUpload = () => {
   const [progress, setProgress] = useState(0)
   const [caption, setCaption] = useState('')
   const [{ userName }, dispatch] = useStateValue()
+  const [emojiPicker, setEmojiPicker] = useState(false)
   const hiddenFileInput = useRef(null)
 
   const handleChange = (e) => {
@@ -24,7 +26,7 @@ const ImageUpload = () => {
   const handleUpload = () => {
     const uploadTask = storage.ref(`images/${image.name}`).put(image)
     uploadTask.on(
-      "state_changed",
+      'state_changed',
       (snapshot) => {
         // progress function ...
         const progress = Math.round(
@@ -39,7 +41,7 @@ const ImageUpload = () => {
       () => {
         // complete function ...
         storage
-          .ref("images")
+          .ref('images')
           .child(image.name)
           .getDownloadURL()
           .then( url => {
@@ -60,11 +62,15 @@ const ImageUpload = () => {
             })
 
             setProgress(0)
-            setCaption("")
+            setCaption('')
             setImage(null)
           })
       }
     )
+  }
+
+  const addEmoji = (event, emojiObject) => {
+    setCaption( emojiAdded => emojiAdded.concat(emojiObject.emoji))
   }
 
   const handleUploadErrorMassage = () => {
@@ -72,48 +78,65 @@ const ImageUpload = () => {
   }
 
   return (
-    <div className="imageupload">
-      {/* <FlipMove> */}
-        <progress className="imageupload__progress" value={progress} max="100" />
-
-        <Input
-          placeholder="Enter a caption"
-          value={caption}
-          onChange={e => setCaption(e.target.value)}
-          disableUnderline={true} 
-          autoFocus={true}
-          style={{ padding: "0 10px"}}
-
-        />
-        
-        <div className="imageupload__bottom">
-          {
-            image ?
-            <Button 
-              className="imageupload__button__selected" 
-              onClick={handleUpload}>
-              Upload
-            </Button>
-            :
-            <Button 
-              className="imageupload__button" 
-              onClick={handleUploadErrorMassage}>
-              Upload
-            </Button>
-          }
-
-          <label className="uploadPhoto " htmlFor="uploadPhoto">Select File</label>
-          <input 
-            type="file" 
-            /* style={{display: "none"}}  */
-            id="uploadPhoto" 
-            onChange={handleChange} 
+    <div className='imageupload'>
+      <progress className='imageupload__progress' value={ progress } max='100' />
+      
+      <div className='writeMessage'>
+        <div className='inputImage'>
+          <Input
+            placeholder='Enter a caption'
+            value={ caption }
+            onChange={ e => setCaption(e.target.value) }
+            disableUnderline={ true } 
+            autoFocus={ true }
+            style={{ padding: '0 10px' }}
           />
         </div>
-          
-        <br/>
+        <div onClick={ () => setEmojiPicker(!emojiPicker) }>
+          <InsertEmoticon className='openEmojiPicker'/>
+        </div>
+      </div>
+      
 
-      {/* </FlipMove> */}
+        <div className='emojiPicker' style={{ display: emojiPicker ? '' : 'none' }}>
+          <EmojiPicker 
+            onEmojiClick={ addEmoji } 
+            groupVisibility={{
+              flags: false,
+              symbols: false
+            }}
+            disableSearchBar={ true } /> 
+        </div>
+      
+
+      <div className='imageupload__bottom'>
+        {
+          image ?
+          <Button 
+            className='imageupload__button__selected' 
+            onClick={ handleUpload }>
+            Upload
+          </Button>
+          :
+          <Button 
+            className='imageupload__button' 
+            onClick={ handleUploadErrorMassage }>
+            Upload
+          </Button>
+        }
+
+        <label className='uploadPhoto ' htmlFor='uploadPhoto'>Select File</label>
+        <input 
+          type='file'
+          /* style={{display: "none"}}  */
+          id='uploadPhoto' 
+          onChange={ handleChange } 
+        />
+      </div>
+        
+      <br/>
+
+    
     </div>
   )
 }

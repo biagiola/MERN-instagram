@@ -6,6 +6,34 @@
   border: 1px solid lightgray;
   background-color: #ffffff;
   max-width: 500px;
+  position: relative;
+}
+
+.writeMessage {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.inputImage {
+  width: 100%
+}
+.MuiInputBase-input {
+  width: 100% !important;
+}
+
+.openEmojiPicker{
+  color: gray;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.emojiPicker {
+  position: absolute;
+  z-index: 100;
+  left: 220px;
+  bottom: 73px;
+  cursor: pointer;
 }
 
 .imageupload__progress {
