@@ -72,78 +72,12 @@ const Login = () => {
   const [image, setImage] = useState(null)
   
   // listening for auth changes
-  /* useEffect(() => {
-    console.log('useEffect unsubscribe')
-    const unsubscribe = auth.onAuthStateChanged(authUser => {
-      if (authUser) {
-        // user is logged in...
-        console.log('true1 authUser.displayName', authUser.displayName)
-        setUser(authUser)
-        
-        localStorage.setItem('user', JSON.stringify(username))
-
-        // dispatches for signup
-        dispatch({
-          type: actionTypes.SET_EMAIL,
-          userEmail: authUser.email,
-        })
-        dispatch({
-          type: actionTypes.SET_USER,
-          userName: username
-        })
-
-        // firebase set displayName
-        authUser.updateProfile({
-          displayName: username
-        })
-        authUser.reload()
-
-        console.log('authUser.displayName2', authUser.displayName)
-
-        if (authUser.displayName) {
-          console.log('true1 true2')
-          // dont update username
-        } else {
-          console.log('true1 false2')
-          //localStorage.setItem('user', JSON.stringify(username))
-          authUser.updateProfile({
-            displayName: username,
-          })
-          return authUser.reload()
-        }
-      } else {
-        console.log('false1')
-        setUser(null)
-        dispatch({
-          type: actionTypes.SET_USER,
-          userUser: null
-        })
-        dispatch({
-          type: actionTypes.SET_EMAIL,
-          userEmail: null
-        })
-        localStorage.removeItem('user')
-        localStorage.removeItem('email')
-        setEmail('')
-        setPassword('')
-        setEmailSignUp('')
-        setPasswordSignUp('')
-      }
-    })
-
-    return () => {
-     unsubscribe()
-    }
-  }, [user, userEmail, userName]) */
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(authUser => {
       if(authUser) {
         console.log('it has authUser')
         if(authUser.displayName) {
           console.log('it has displayName')
-          
-          localStorage.setItem('user', JSON.stringify(username))
           
           dispatch({
             type: actionTypes.SET_EMAIL,
@@ -184,8 +118,10 @@ const Login = () => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then( authUser => {
-        console.log('signInWithEmailAndPassword authUser.ser', authUser.user)
+        console.log('signInWithEmailAndPassword authUser.user', authUser.user)
         setUser(authUser.user)
+        localStorage.setItem('user', JSON.stringify(authUser.user.displayName))
+        localStorage.setItem('email', JSON.stringify(authUser.user.email))
       }) 
       .catch(error => alert(error.message))
   }
@@ -199,8 +135,7 @@ const Login = () => {
 
   const handleSignUp = e => {
     e.preventDefault()
-    
-    auth
+   /*  auth
       .createUserWithEmailAndPassword(emailSignUp, passwordSignUp)
       .then( authUser => {
         console.log('handleSignUp authUser.user.displayName', authUser.user.displayName)
@@ -218,38 +153,39 @@ const Login = () => {
         console.log('authUser.displayName', authUser.displayName)
         
       })
-      .catch(error => alert(error.message))
+      .catch(error => alert(error.message)) */
 
-    /* if (image) {
+    /* if (true) {
       const imgForm = new FormData()
       imgForm.append('file', image, image.name)
 
       console.log('imgForm', imgForm)
 
-      axios.post('user/upload/image', imgForm, {
+      axios.post('posts/upload/avatar', imgForm, {
         headers: {
           'accept': 'application/json',
           'Accept-Language': 'en-US,en;q=0.8',
           'Content-type': `multipart/form-data; boundary=${imgForm._boundary}`,
         }
       }).then( res => {
-        console.log('post img res.data',res.data) */
+        console.log('post img res.data',res.data)  */
 
-        /* auth
+         auth
           .createUserWithEmailAndPassword(emailSignUp, passwordSignUp)
           .then( authUser => {
-            console.log('handleSignUp authUser.user', authUser.user)            
             console.log('handleSignUp authUser.user.displayName', authUser.user.displayName)
-            console.log('handleSignUp authUser.user.email', authUser.user.email)
             console.log('handleSignUp username ', username)    
 
             authUser.user.updateProfile({
               displayName: username
             }).then( console.log('displayName success!')) 
-          })
-          .catch(error => alert(error.message)) */
 
-   /*    })
+            authUser.user.reload()
+            console.log('authUser.displayName', authUser.displayName)
+
+          })
+          .catch(error => alert(error.message))
+    /*    })
     }
     else {
       alert('Must to select a image')
@@ -277,7 +213,7 @@ const Login = () => {
   }
 
   return (
-    !userEmail ? (
+    !user ? (
     <div className="login__page">
       <div className="login__page__top">
         {/* left */}
@@ -378,7 +314,7 @@ const Login = () => {
                         onChange={e => setPasswordSignUp(e.target.value)}
                       />
                       {/* image upload */}
-                      <div>
+                      {/* <div>
                         <label className="custom-file-upload messageSender__option">
                           <h3>Photo</h3>
                           <Input 
@@ -388,7 +324,7 @@ const Login = () => {
                             label="upload"
                           />
                         </label>
-                      </div>
+                      </div> */}
                     </div>
                     <div className={classes.button}>
                       <Button type="submit">Sign Up</Button>
