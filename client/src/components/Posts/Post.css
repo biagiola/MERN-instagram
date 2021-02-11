@@ -115,6 +115,7 @@
   border: none;
   padding: 10px;
   border-top: 1px solid lightgray;
+  overflow: none !important
 }
 
 .post__button {

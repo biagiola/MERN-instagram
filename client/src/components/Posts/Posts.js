@@ -37,18 +37,18 @@ const Posts = () => {
     <div>
       <div className="posts">
 
-        {newPosts.length ? newPosts.map( response => (
-            <Post
-              user={'David'}
-              key={response._id}
-              postId={response._id} 
-              username={response.user}
-              caption={response.caption}
-              imageUrl={response.image}
-            />
-            )) : ''
+        {newPosts.length > 0 ? newPosts.map( response => (
+          <Post
+            key={response._id}
+            postId={response._id} 
+            username={response.user}
+            caption={response.caption}
+            imageUrl={response.image}
+            filterPost={ dato => handleFilter(dato) }
+          />
+          )) : ''
         }
-        
+
         <FlipMove>
           {userEmail ? posts.map(post => (
             <Post
@@ -61,6 +61,7 @@ const Posts = () => {
             />
             )) : ''}
         </FlipMove>
+
       </div>
     </div>
   )

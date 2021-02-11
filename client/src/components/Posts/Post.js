@@ -16,6 +16,7 @@ const Post = forwardRef(
 
     console.log('post postId', postId)
 
+    const [emoji, setemoji] = useState()
   const [comments, setComments] = useState([])
   const [comment, setComment] = useState("")
   const [like, setLike] = useState(false)
