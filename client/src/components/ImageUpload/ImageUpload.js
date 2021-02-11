@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { storage } from '../../firebase'
 import { Input, Button } from '@material-ui/core'
 import { InsertEmoticon }from '@material-ui/icons'
@@ -14,8 +14,8 @@ const ImageUpload = () => {
   const [progress, setProgress] = useState(0)
   const [caption, setCaption] = useState('')
   const [{ userName }, dispatch] = useStateValue()
-  const [emojiPicker, setEmojiPicker] = useState(false)
-  const hiddenFileInput = useRef(null)
+  const [toggleEmojiPicker, setToggleEmojiPicker] = useState(false)
+  const node = useRef()
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -73,6 +73,32 @@ const ImageUpload = () => {
     setCaption( emojiAdded => emojiAdded.concat(emojiObject.emoji))
   }
 
+  // listening when is clicked
+  useEffect(() => {
+    // add when mounted
+    document.addEventListener("mousedown", handleClick);
+    // return function to be called when unmounted
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, [])
+
+  // toggle emoji picker
+  const handleClick = e => {
+    console.log(node.current.contains(e.target))
+    console.log(node.current)
+    // inside click
+    if (node.current.contains(e.target)) {
+      setToggleEmojiPicker(true)
+      console.log('click in toggleEmojiPicker: ', toggleEmojiPicker)
+      return;
+    }
+
+    // outside click 
+    setToggleEmojiPicker(false)
+    console.log('click out toggleEmojiPicker:', toggleEmojiPicker)
+  }
+
   const handleUploadErrorMassage = () => {
     alert('File was not selected')
   }
@@ -92,14 +118,17 @@ const ImageUpload = () => {
             style={{ padding: '0 10px' }}
           />
         </div>
-        <div onClick={ () => setEmojiPicker(!emojiPicker) }>
-          <InsertEmoticon className='openEmojiPicker'/>
+        <div onClick={ () => setToggleEmojiPicker(!toggleEmojiPicker) }>
+          <InsertEmoticon className='openEmojiPicker' style={{ display: !toggleEmojiPicker ? '' : 'none' }}/>
         </div>
       </div>
-      
 
-        <div className='emojiPicker' style={{ display: emojiPicker ? '' : 'none' }}>
-          <EmojiPicker 
+      <div ref={ node }>
+        <div onClick={ () => setToggleEmojiPicker(!toggleEmojiPicker) }>
+          <InsertEmoticon className='openEmojiPicker2' style={{ display: toggleEmojiPicker ? '' : 'none' }}/>
+        </div>
+        <div className='emojiPicker' style={{ display: toggleEmojiPicker ? '' : 'none' }}>
+          <EmojiPicker
             onEmojiClick={ addEmoji } 
             groupVisibility={{
               flags: false,
@@ -107,7 +136,7 @@ const ImageUpload = () => {
             }}
             disableSearchBar={ true } /> 
         </div>
-      
+      </div>
 
       <div className='imageupload__bottom'>
         {
@@ -142,3 +171,4 @@ const ImageUpload = () => {
 }
 
 export default ImageUpload
+

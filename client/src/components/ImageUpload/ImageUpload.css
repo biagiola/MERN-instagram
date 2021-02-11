@@ -22,17 +22,25 @@
   width: 100% !important;
 }
 
-.openEmojiPicker{
+.openEmojiPicker, .openEmojiPicker2 {
+  position: absolute;
   color: gray;
   padding: 5px;
   cursor: pointer;
+  left: 468px;
+  bottom: 45px;
+  transition: colo 0.2s;
+}
+
+.openEmojiPicker2 {
+  color: #0095F6;
 }
 
 .emojiPicker {
   position: absolute;
   z-index: 100;
   left: 220px;
-  bottom: 73px;
+  top: 35px;
   cursor: pointer;
 }
 
